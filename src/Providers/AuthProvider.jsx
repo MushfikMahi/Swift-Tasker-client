@@ -20,6 +20,8 @@ const googleProvider = new GoogleAuthProvider();
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [role, setRole] = useState("");
+  const [coin, setCoin] = useState(0);
 
   const createUser = (email, password) => {
     setLoading(true);
@@ -33,6 +35,8 @@ const AuthProvider = ({ children }) => {
 
   const signInWithGoogle = () => {
     setLoading(true);
+    setCoin("Worker");
+    setRole(10);
     return signInWithPopup(auth, googleProvider);
   };
 
@@ -65,44 +69,37 @@ const AuthProvider = ({ children }) => {
   //   return data;
   // };
 
-  const [role, setRole] = useState("Worker");
-  const [coin, setCoin] = useState(10);
-
   // handle role and coin
   const handleRole = (role, coin) => {
-    setRole(role);
-    setCoin(coin);
     console.log(role, coin);
+    setCoin(coin);
+    setRole(role);
   };
 
-  // save user
-  const saveUser = async (user) => {
-    const currentUser = {
-      email: user?.email,
-      role: role,
-      coin: coin,
-    };
-    console.log(user);
-    const { data } = await axios.put(
-      `${import.meta.env.VITE_API_URL}/user`,
-      currentUser
-    );
-    return data;
-  };
   // onAuthStateChange
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
       if (currentUser) {
         // getToken(currentUser.email);
-        saveUser(currentUser);
+        const currentsUser = {
+          email: currentUser?.email,
+          role: role,
+          coin: coin,
+          status: "Verified",
+        };
+        const { data } = await axios.put(
+          `${import.meta.env.VITE_API_URL}/user`,
+          currentsUser
+        );
+        return data;
       }
       setLoading(false);
     });
     return () => {
       return unsubscribe();
     };
-  }, []);
+  }, [role, coin]);
 
   const authInfo = {
     user,
