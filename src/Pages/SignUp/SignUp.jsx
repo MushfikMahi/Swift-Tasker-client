@@ -104,6 +104,19 @@ const SignUp = () => {
                 data-temp-mail-org="0"
               />
             </div>
+            <div className="flex flex-col gap-2 ">
+              <label className="text-gray-700 " htmlFor="difficulty_level">
+                Select The Role
+              </label>
+              <select
+                name="difficulty_level"
+                id="difficulty_level"
+                className="border p-2 rounded-md"
+              >
+                <option value="Worker">Worker</option>
+                <option value="TaskCreator">TaskCreator</option>
+              </select>
+            </div>
             <div>
               <div className="flex justify-between">
                 <label htmlFor="password" className="text-sm mb-2">

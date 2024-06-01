@@ -128,7 +128,13 @@ const Navbar = () => {
           </svg>
         </label> */}
         {user ? (
-          <div className="flex flex-row-reverse items-center gap-3">
+          <div className="flex items-center gap-3">
+            <button className="btn bg-transparent border-none">
+              Coin
+              <div className="bg-[#008080] badge border-none text-white">
+                +99
+              </div>
+            </button>
             <div className="dropdown dropdown-end">
               <div
                 tabIndex={0}
