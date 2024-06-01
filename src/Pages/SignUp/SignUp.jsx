@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import useAuth from "../../Hooks/useAuth";
-import axios from "axios";
+// import axios from "axios";
 import toast from "react-hot-toast";
 import { TbFidgetSpinner } from "react-icons/tb";
 import { imageUpload } from "../../api/utils";
@@ -13,6 +13,7 @@ const SignUp = () => {
     signInWithGoogle,
     updateUserProfile,
     loading,
+    handleRole,
     setLoading,
   } = useAuth();
 
@@ -22,7 +23,15 @@ const SignUp = () => {
     const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
+    const role = form.role.value;
     const image = form.image.files[0];
+    let coin = 0;
+    if (role === "Worker") {
+      coin = 10;
+    } else {
+      coin = 50;
+    }
+    console.log({ name, email, password, role, image, coin });
 
     try {
       setLoading(true);
@@ -32,7 +41,7 @@ const SignUp = () => {
       //2. User Registration
       const result = await createUser(email, password);
       console.log(result);
-
+      await handleRole(role, coin);
       // 3. Save username and photo in firebase
       await updateUserProfile(name, image_url);
       navigate("/");
@@ -108,11 +117,7 @@ const SignUp = () => {
               <label className="text-gray-700 " htmlFor="difficulty_level">
                 Select The Role
               </label>
-              <select
-                name="difficulty_level"
-                id="difficulty_level"
-                className="border p-2 rounded-md"
-              >
+              <select name="role" id="role" className="border p-2 rounded-md">
                 <option value="Worker">Worker</option>
                 <option value="TaskCreator">TaskCreator</option>
               </select>

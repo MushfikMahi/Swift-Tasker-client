@@ -56,35 +56,45 @@ const AuthProvider = ({ children }) => {
     });
   };
   // Get token from server
-  const getToken = async (email) => {
-    const { data } = await axios.post(
-      `${import.meta.env.VITE_API_URL}/jwt`,
-      { email },
-      { withCredentials: true }
-    );
-    return data;
+  // const getToken = async (email) => {
+  //   const { data } = await axios.post(
+  //     `${import.meta.env.VITE_API_URL}/jwt`,
+  //     { email },
+  //     { withCredentials: true }
+  //   );
+  //   return data;
+  // };
+
+  const [role, setRole] = useState("Worker");
+  const [coin, setCoin] = useState(10);
+
+  // handle role and coin
+  const handleRole = (role, coin) => {
+    setRole(role);
+    setCoin(coin);
+    console.log(role, coin);
   };
 
   // save user
   const saveUser = async (user) => {
     const currentUser = {
       email: user?.email,
-      role: "worker",
-      // status: "Verified",
+      role: role,
+      coin: coin,
     };
+    console.log(user);
     const { data } = await axios.put(
       `${import.meta.env.VITE_API_URL}/user`,
       currentUser
     );
     return data;
   };
-
   // onAuthStateChange
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       if (currentUser) {
-        getToken(currentUser.email);
+        // getToken(currentUser.email);
         saveUser(currentUser);
       }
       setLoading(false);
@@ -104,6 +114,7 @@ const AuthProvider = ({ children }) => {
     resetPassword,
     logOut,
     updateUserProfile,
+    handleRole,
   };
 
   return (
