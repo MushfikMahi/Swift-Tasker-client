@@ -35,8 +35,8 @@ const AuthProvider = ({ children }) => {
 
   const signInWithGoogle = () => {
     setLoading(true);
-    setCoin("Worker");
-    setRole(10);
+    setRole("Worker");
+    setCoin(10);
     return signInWithPopup(auth, googleProvider);
   };
 
@@ -47,9 +47,9 @@ const AuthProvider = ({ children }) => {
 
   const logOut = async () => {
     setLoading(true);
-    // await axios.get(`${import.meta.env.VITE_API_URL}/logout`, {
-    //   withCredentials: true,
-    // });
+    await axios.get(`${import.meta.env.VITE_API_URL}/logout`, {
+      withCredentials: true,
+    });
     return signOut(auth);
   };
 

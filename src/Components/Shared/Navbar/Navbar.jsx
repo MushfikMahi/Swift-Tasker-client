@@ -2,23 +2,24 @@ import { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../../Providers/AuthProvider";
 import toast from "react-hot-toast";
+import useRole from "../../../Hooks/useRole";
 // import { toast } from "react-toastify";
 
 const Navbar = () => {
-  const [theme, setTheme] = useState("light");
-  const handleToggle = (e) => {
-    if (e.target.checked) {
-      setTheme("dark");
-    } else {
-      setTheme("light");
-    }
-  };
-  useEffect(() => {
-    localStorage.setItem("theme", theme);
-    const localTheme = localStorage.getItem("theme");
-    document.querySelector("html").setAttribute("data-theme", localTheme);
-  }, [theme]);
-
+  // const [theme, setTheme] = useState("light");
+  // const handleToggle = (e) => {
+  //   if (e.target.checked) {
+  //     setTheme("dark");
+  //   } else {
+  //     setTheme("light");
+  //   }
+  // };
+  // useEffect(() => {
+  //   localStorage.setItem("theme", theme);
+  //   const localTheme = localStorage.getItem("theme");
+  //   document.querySelector("html").setAttribute("data-theme", localTheme);
+  // }, [theme]);
+  const [data] = useRole();
   const { user, logOut } = useContext(AuthContext);
   const handleLogOut = () => {
     logOut();
@@ -132,7 +133,7 @@ const Navbar = () => {
             <button className="btn bg-transparent border-none">
               Coin
               <div className="bg-[#008080] badge border-none text-white">
-                +99
+                {data?.coin}
               </div>
             </button>
             <div className="dropdown dropdown-end">
