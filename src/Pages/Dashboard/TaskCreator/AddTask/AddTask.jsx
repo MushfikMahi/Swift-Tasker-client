@@ -35,28 +35,31 @@ const AddTask = () => {
     } else {
       const form = e.target;
       const task_title = form.task_title.value;
+      const submission_info = form.submission_info.value;
       const email = form.email.value;
-      const deadline = startDate;
+      const completion_date = startDate;
       const task_quantity = parseFloat(form.task_quantity.value);
       const payable_amount = parseFloat(form.payable_amount.value);
       const task_detail = form.task_detail.value;
       const image = form.image.files[0];
-
+      const currentTime = new Date().toISOString();
       const totalAmount = task_quantity * payable_amount;
 
       if (totalAmount < data.coin) {
         const task_image_url = await imageUpload(image);
         const task = {
           task_title,
-          deadline,
+          task_detail,
           task_quantity,
           payable_amount,
+          completion_date,
+          submission_info,
           task_image_url,
-          task_detail,
           task_creator: {
             email,
             name: user?.displayName,
           },
+          created_at: currentTime,
         };
         const newCoin = data.coin - totalAmount;
         console.log(task);
@@ -160,6 +163,16 @@ const AddTask = () => {
               className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md  focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40  focus:outline-none focus:ring"
               name="task_detail"
               id="task_detail"
+            ></textarea>
+          </div>
+          <div className="flex flex-col gap-2 mt-4">
+            <label className="text-gray-700 " htmlFor="submission_info">
+              Submission Detail
+            </label>
+            <textarea
+              className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md  focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40  focus:outline-none focus:ring"
+              name="submission_info"
+              id="submission_info"
             ></textarea>
           </div>
           <div className="flex justify-end mt-6">
