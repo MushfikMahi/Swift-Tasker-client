@@ -5,9 +5,8 @@ import DatePicker from "react-datepicker";
 import useRole from "../../../../Hooks/useRole";
 import "react-datepicker/dist/react-datepicker.css";
 import { useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { axiosSecure } from "../../../../Hooks/useAxiosSecure";
+import { useNavigate } from "react-router-dom";
 const AddTask = () => {
   const { user } = useAuth();
   const [data, refetch] = useRole();
@@ -59,13 +58,13 @@ const AddTask = () => {
             name: user?.displayName,
           },
         };
-        const { newCoin } = data.coin - totalAmount;
+        const newCoin = data.coin - totalAmount;
         console.log(task);
         try {
           const { data } = await axiosSecure.post("/task", task);
           console.log(data);
           toast.success("Task Created Successfully!");
-          //   await axiosSecure.patch(`/user/${user?.email}`, newCoin);
+          await axiosSecure.patch(`/user/${user?.email}`, { newCoin });
           refetch();
           navigate("/mytask");
         } catch (err) {
