@@ -13,6 +13,7 @@ import {
 } from "firebase/auth";
 import { app } from "../Firebase/firebase.config";
 import axios from "axios";
+import { axiosSecure } from "../Hooks/useAxiosSecure";
 export const AuthContext = createContext(null);
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
@@ -61,7 +62,7 @@ const AuthProvider = ({ children }) => {
   };
   // Get token from server
   const getToken = async (email) => {
-    const { data } = await axios.post(
+    const { data } = await axiosSecure.post(
       `${import.meta.env.VITE_API_URL}/jwt`,
       { email },
       { withCredentials: true }

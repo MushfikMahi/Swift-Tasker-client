@@ -53,25 +53,25 @@ const Dashboard = () => {
             ) : role === "TaskCreator" ? (
               <>
                 <li>
-                  <NavLink to="/dashboard/userHome">
+                  <NavLink to="/dashboard/taskerHome">
                     <FaHome></FaHome>
                     Tasker Home
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/dashboard/paymentHistory">
+                  <NavLink to="/dashboard/addtask">
                     <FaCalendar></FaCalendar>
                     Add new Tasks
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/dashboard/cart">
+                  <NavLink to="/dashboard/mytask">
                     <FaShoppingCart></FaShoppingCart>
                     My Task’s
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/dashboard/review">
+                  <NavLink to="/dashboard/purchasecoin">
                     <FaAd></FaAd>
                     Purchase Coin
                   </NavLink>

@@ -35,7 +35,7 @@ const DashboardNavbar = () => {
             <div className="flex items-center gap-5">
               <p>{data?.role}</p> ||
               <div className="w-10 rounded-full">
-                <p>{user.displayName}</p>
+                <p>{user?.displayName}</p>
               </div>
             </div>
           </div>
