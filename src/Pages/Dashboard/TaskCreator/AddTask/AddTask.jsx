@@ -137,6 +137,7 @@ const AddTask = () => {
                 Task Image
               </label>
               <input
+                required
                 name="image"
                 type="file"
                 className="file-input w-full max-w-xs"
