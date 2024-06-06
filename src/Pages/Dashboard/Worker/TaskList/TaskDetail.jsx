@@ -1,15 +1,32 @@
 import { useLoaderData } from "react-router-dom";
+import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
+import toast from "react-hot-toast";
 
 const TaskDetail = () => {
   const task = useLoaderData();
+  const axiosSecure = useAxiosSecure();
   console.log(task);
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
     const submission_details = form.submission_details.value;
     const current_date = new Date().toISOString();
-    const submit = { ...task, submission_details, current_date };
+    const { _id, ...restOfTask } = task;
+    const submit = {
+      ...restOfTask,
+      task_id: _id,
+      submission_details,
+      current_date,
+      status: "pending",
+    };
     console.log(submit);
+    try {
+      const { data } = await axiosSecure.post("/submission", submit);
+      console.log(data);
+      toast.success("Task Submitted Successfully!");
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div className="flex flex-col md:flex-row container mx-auto gap-5 py-20">
