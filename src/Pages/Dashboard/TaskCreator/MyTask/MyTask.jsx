@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import useAuth from "../../../../Hooks/useAuth";
-import useAxiosCommon from "../../../../Hooks/useAxiosCommon";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { GrDocumentUpdate } from "react-icons/gr";
-import { axiosSecure } from "../../../../Hooks/useAxiosSecure";
+import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import useRole from "../../../../Hooks/useRole";
@@ -12,14 +11,14 @@ const MyTask = () => {
   // console.log(user);
   const [data, refetch] = useRole();
   const [tasks, setTasks] = useState([]);
-  const axiosCommon = useAxiosCommon();
+  const axiosSecure = useAxiosSecure();
   const [control, setControl] = useState(false);
   useEffect(() => {
-    axiosCommon(`/tasks/${user?.email}`).then((result) => {
+    axiosSecure(`/tasks/${user?.email}`).then((result) => {
       setTasks(result.data);
       // console.log(result.data);
     });
-  }, [user, control, axiosCommon]);
+  }, [user, control, axiosSecure]);
 
   const handleUpdate = () => {
     console.log("update");

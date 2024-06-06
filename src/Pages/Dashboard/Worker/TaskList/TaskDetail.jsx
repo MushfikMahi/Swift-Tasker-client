@@ -1,15 +1,20 @@
 import { useLoaderData } from "react-router-dom";
 import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 import toast from "react-hot-toast";
+import useAuth from "../../../../Hooks/useAuth";
 
 const TaskDetail = () => {
   const task = useLoaderData();
+  const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   console.log(task);
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
     const submission_details = form.submission_details.value;
+    const { email, displayName } = user;
+    const worker_info = { email, displayName };
+    console.log(worker_info);
     const current_date = new Date().toISOString();
     const { _id, ...restOfTask } = task;
     const submit = {
@@ -17,6 +22,7 @@ const TaskDetail = () => {
       task_id: _id,
       submission_details,
       current_date,
+      worker_info,
       status: "pending",
     };
     console.log(submit);
