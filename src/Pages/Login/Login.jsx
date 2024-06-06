@@ -8,7 +8,7 @@ import { useState } from "react";
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  // const from = location?.state || "/";
+  const from = location?.state || "/";
   const { signInWithGoogle, signIn, loading, setLoading, resetPassword } =
     useAuth();
   const [email, setEmail] = useState("");

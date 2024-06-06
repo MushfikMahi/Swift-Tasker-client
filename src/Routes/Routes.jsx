@@ -10,6 +10,10 @@ import AddTask from "../Pages/Dashboard/TaskCreator/AddTask/AddTask";
 import MyTask from "../Pages/Dashboard/TaskCreator/MyTask/MyTask";
 import PurchaseCoin from "../Pages/Dashboard/TaskCreator/PurchaseCoin/PurchaseCoin";
 import PaymentHistory from "../Pages/Dashboard/TaskCreator/PaymentHistory/PaymentHistory";
+import WorkerHome from "../Pages/Dashboard/Worker/WorkerHome/WorkerHome";
+import TaskList from "../Pages/Dashboard/Worker/TaskList/TaskList";
+import Withdrawa from "../Pages/Dashboard/Worker/Withdrawa/Withdrawa";
+import MySubmission from "../Pages/Dashboard/Worker/MySubmission/MySubmission";
 
 export const router = createBrowserRouter([
   {
@@ -29,6 +33,7 @@ export const router = createBrowserRouter([
     path: "dashboard",
     element: <Dashboard />,
     children: [
+      // task creator
       {
         path: "taskerHome",
         element: <TaskCreatorHome />,
@@ -48,6 +53,24 @@ export const router = createBrowserRouter([
       {
         path: "paymentHistory",
         element: <PaymentHistory />,
+      },
+      // worker
+      {
+        path: "userHome",
+        element: <WorkerHome></WorkerHome>,
+      },
+      {
+        path: "tasklist",
+        element: <TaskList></TaskList>,
+        loader: () => fetch("http://localhost:8000/tasks"),
+      },
+      {
+        path: "mysubmission",
+        element: <MySubmission></MySubmission>,
+      },
+      {
+        path: "withdrawa",
+        element: <Withdrawa></Withdrawa>,
       },
     ],
   },
