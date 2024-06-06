@@ -35,7 +35,7 @@ const TaskList = () => {
             </div>
             <hr className="my-5" />
             <div className="card-actions justify-center">
-              <Link to={`/detail/${task?._id}`}>
+              <Link to={`task/${task?._id}`}>
                 <button className="btn bg-[#008080] text-white">
                   View Detail
                 </button>

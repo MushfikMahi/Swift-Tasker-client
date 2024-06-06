@@ -14,6 +14,7 @@ import WorkerHome from "../Pages/Dashboard/Worker/WorkerHome/WorkerHome";
 import TaskList from "../Pages/Dashboard/Worker/TaskList/TaskList";
 import Withdrawa from "../Pages/Dashboard/Worker/Withdrawa/Withdrawa";
 import MySubmission from "../Pages/Dashboard/Worker/MySubmission/MySubmission";
+import TaskDetail from "../Pages/Dashboard/Worker/TaskList/TaskDetail";
 
 export const router = createBrowserRouter([
   {
@@ -62,7 +63,13 @@ export const router = createBrowserRouter([
       {
         path: "tasklist",
         element: <TaskList></TaskList>,
-        loader: () => fetch("http://localhost:8000/tasks"),
+        loader: () => fetch(`${import.meta.env.VITE_API_URL}/tasks`),
+      },
+      {
+        path: "tasklist/task/:id",
+        element: <TaskDetail></TaskDetail>,
+        loader: ({ params }) =>
+          fetch(`${import.meta.env.VITE_API_URL}/task/${params.id}`),
       },
       {
         path: "mysubmission",

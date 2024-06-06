@@ -27,7 +27,7 @@ const Dashboard = () => {
       <DashboardNavbar></DashboardNavbar>
       <div className="flex">
         {/* dashboard side bar */}
-        <div className="w-64 min-h-screen bg-orange-400">
+        <div className="w-64 min-h-screen bg-[#008080]">
           <ul className="menu p-4">
             {role === "Admin" ? (
               <>
