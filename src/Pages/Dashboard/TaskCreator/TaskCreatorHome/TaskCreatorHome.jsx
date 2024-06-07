@@ -30,19 +30,16 @@ const TaskCreatorHome = () => {
     document.getElementById(`modal_${task._id}`).showModal();
   };
 
-  const handleApprove = async (task) => {
-    const payable_amount = task?.payable_amount;
-    const task_quantity = task?.task_quantity;
-    const coin = user.coin;
-    const status = "Approved";
-
+  const handleStatus = async (status, id) => {
+    const newStatus = status;
+    console.log(newStatus, id);
     try {
-      const { data } = await axiosSecure.put(
-        `${import.meta.env.VITE_API_URL}/marked/${task?._id}`,
-        formAssignment
+      const { data } = await axiosSecure.patch(
+        `${import.meta.env.VITE_API_URL}/submissionMark/${id}`,
+        { newStatus }
       );
       console.log(data);
-      toast.success("Task Approved Successfully!");
+      toast.success(`Task ${newStatus} Successfully!`);
       // navigate('/')
     } catch (err) {
       console.log(err);
@@ -195,7 +192,7 @@ const TaskCreatorHome = () => {
                         </td>
                         <td className="px-4 py-4 text-sm whitespace-nowrap">
                           <p
-                            onClick={() => handleApprove(task)}
+                            onClick={() => handleStatus("Approved", task?._id)}
                             className="text-xl text-[#0077cc] cursor-pointer hover:text-[#005fa3]"
                           >
                             <MdOutlinePendingActions />
@@ -203,7 +200,7 @@ const TaskCreatorHome = () => {
                         </td>
                         <td className="px-4 py-4 text-sm font-medium text-gray-00 whitespace-nowrap">
                           <p
-                            onClick={() => handleReject(task)}
+                            onClick={() => handleStatus("Reject", task?._id)}
                             className="text-2xl text-[#e74c3c] cursor-pointer hover:text-[#c0392b]"
                           >
                             <MdOutlineDoNotDisturb />
