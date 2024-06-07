@@ -23,7 +23,7 @@ const TaskDetail = () => {
       submission_details,
       current_date,
       worker_info,
-      status: "pending",
+      status: "Pending",
     };
     console.log(submit);
     try {
