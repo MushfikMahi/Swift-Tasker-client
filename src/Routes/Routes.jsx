@@ -15,6 +15,9 @@ import TaskList from "../Pages/Dashboard/Worker/TaskList/TaskList";
 import Withdrawa from "../Pages/Dashboard/Worker/Withdrawa/Withdrawa";
 import MySubmission from "../Pages/Dashboard/Worker/MySubmission/MySubmission";
 import TaskDetail from "../Pages/Dashboard/Worker/TaskList/TaskDetail";
+import AdminHome from "../Pages/Dashboard/Admin/AdminHome/AdminHome";
+import ManageUser from "../Pages/Dashboard/Admin/ManageUser/ManageUser";
+import ManageTask from "../Pages/Dashboard/Admin/ManageTask/ManageTask";
 
 export const router = createBrowserRouter([
   {
@@ -34,6 +37,19 @@ export const router = createBrowserRouter([
     path: "dashboard",
     element: <Dashboard />,
     children: [
+      // admin
+      {
+        path: "adminHome",
+        element: <AdminHome></AdminHome>,
+      },
+      {
+        path: "manageUser",
+        element: <ManageUser></ManageUser>,
+      },
+      {
+        path: "manageTask",
+        element: <ManageTask></ManageTask>,
+      },
       // task creator
       {
         path: "taskerHome",

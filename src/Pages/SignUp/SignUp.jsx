@@ -17,7 +17,7 @@ const SignUp = () => {
     handleRole,
     setLoading,
   } = useAuth();
-  const [coin, setCoin] = useState(0);
+  // const [coin, setCoin] = useState(0);
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
@@ -26,11 +26,11 @@ const SignUp = () => {
     const password = form.password.value;
     const role = form.role.value;
     const image = form.image.files[0];
-
+    let coin = 0;
     if (role === "Worker") {
-      setCoin(10);
+      coin = 10;
     } else {
-      setCoin(50);
+      coin = 50;
     }
     console.log({ name, email, password, role, image, coin });
 

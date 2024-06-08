@@ -45,42 +45,6 @@ const TaskCreatorHome = () => {
       console.log(err);
     }
   };
-  const handleReject = (task) => {
-    console.log("reject", task);
-    // if (task?.task_creator.email === user?.email) {
-    //   Swal.fire({
-    //     title: "Are you sure?",
-    //     text: "You won't be able to revert this!",
-    //     icon: "warning",
-    //     showCancelButton: true,
-    //     confirmButtonColor: "#3085d6",
-    //     cancelButtonColor: "#d33",
-    //     confirmButtonText: "Yes, delete it!",
-    //   }).then((result) => {
-    //     if (result.isConfirmed) {
-    //       const newAmount = task?.task_quantity * task?.payable_amount;
-    //       const newCoin = data.coin + newAmount;
-    //       fetch(`${import.meta.env.VITE_API_URL}/delete/${task._id}`, {
-    //         method: "DELETE",
-    //       })
-    //         .then((res) => res.json())
-    //         .then(async (data) => {
-    //           console.log(data);
-    //           if (data.deletedCount > 0) {
-    //             Swal.fire(
-    //               "Deleted!",
-    //               "Your Craft has been deleted.",
-    //               "success"
-    //             );
-    //             await axiosSecure.patch(`/user/${user?.email}`, { newCoin });
-    //             refetch();
-    //             setControl(!control);
-    //           }
-    //         });
-    //     }
-    //   });
-    // } else return toast.error("Action not permitted");
-  };
   return (
     <div>
       <section className="container px-4 mx-auto pt-24">

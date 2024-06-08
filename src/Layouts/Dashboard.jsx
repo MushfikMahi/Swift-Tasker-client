@@ -38,13 +38,13 @@ const Dashboard = () => {
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/dashboard/addItems">
+                  <NavLink to="/dashboard/manageUser">
                     <FaUtensils></FaUtensils>
                     Manage Users
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/dashboard/manageItems">
+                  <NavLink to="/dashboard/manageTask">
                     <FaList></FaList>
                     Manage Task
                   </NavLink>
