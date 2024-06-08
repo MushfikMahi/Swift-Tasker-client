@@ -14,6 +14,7 @@ import {
 import { app } from "../Firebase/firebase.config";
 import axios from "axios";
 import { axiosSecure } from "../Hooks/useAxiosSecure";
+import useAxiosCommon from "../Hooks/useAxiosCommon";
 export const AuthContext = createContext(null);
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
@@ -21,8 +22,9 @@ const googleProvider = new GoogleAuthProvider();
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [role, setRole] = useState("");
-  const [coin, setCoin] = useState(0);
+  // const [role, setRole] = useState("");
+  // const [coin, setCoin] = useState(0);
+  const axiosCommon = useAxiosCommon();
 
   const createUser = (email, password) => {
     setLoading(true);
@@ -34,11 +36,20 @@ const AuthProvider = ({ children }) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
-  const signInWithGoogle = () => {
-    setLoading(true);
-    setRole("Worker");
-    setCoin(10);
-    return signInWithPopup(auth, googleProvider);
+  const signInWithGoogle = async () => {
+    const result = await signInWithPopup(auth, googleProvider);
+    const role = "Worker";
+    const coin = 10;
+    const currentsUser = {
+      email: result.user.email,
+      displayName: result.user.displayName,
+      photoURL: result.user.photoURL,
+      role,
+      coin,
+    };
+    console.log(currentsUser);
+    const { data } = await axiosCommon.put("/user", currentsUser);
+    console.log(data);
   };
 
   const resetPassword = (email) => {
@@ -71,11 +82,11 @@ const AuthProvider = ({ children }) => {
   };
 
   // handle role and coin
-  const handleRole = (role, coin) => {
-    console.log(role, coin);
-    setCoin(coin);
-    setRole(role);
-  };
+  // const handleRole = (role, coin) => {
+  //   console.log(role, coin);
+  //   setCoin(coin);
+  //   setRole(role);
+  // };
 
   // onAuthStateChange
   useEffect(() => {
@@ -83,24 +94,24 @@ const AuthProvider = ({ children }) => {
       setUser(currentUser);
       if (currentUser) {
         getToken(currentUser.email);
-        const currentsUser = {
-          email: currentUser?.email,
-          role: role,
-          coin: coin,
-          status: "Verified",
-        };
-        const { data } = await axios.put(
-          `${import.meta.env.VITE_API_URL}/user`,
-          currentsUser
-        );
-        return data;
+        // const currentsUser = {
+        //   email: currentUser?.email,
+        //   role: role,
+        //   coin: coin,
+        //   status: "Verified",
+        // };
+        // const { data } = await axios.put(
+        //   `${import.meta.env.VITE_API_URL}/user`,
+        //   currentsUser
+        // );
+        // return data;
       }
       setLoading(false);
     });
     return () => {
       return unsubscribe();
     };
-  }, [role, coin]);
+  }, []);
 
   const authInfo = {
     user,
@@ -112,7 +123,6 @@ const AuthProvider = ({ children }) => {
     resetPassword,
     logOut,
     updateUserProfile,
-    handleRole,
   };
 
   return (

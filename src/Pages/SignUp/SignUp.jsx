@@ -5,10 +5,12 @@ import useAuth from "../../Hooks/useAuth";
 import toast from "react-hot-toast";
 import { TbFidgetSpinner } from "react-icons/tb";
 import { imageUpload } from "../../api/utils";
-import { useState } from "react";
+import useAxiosCommon from "../../Hooks/useAxiosCommon";
 
 const SignUp = () => {
   const navigate = useNavigate();
+
+  const axiosCommon = useAxiosCommon();
   const {
     createUser,
     signInWithGoogle,
@@ -41,8 +43,17 @@ const SignUp = () => {
       console.log(image_url);
       //2. User Registration
       const result = await createUser(email, password);
-      console.log(result);
-      await handleRole(role, coin);
+      console.log("from signup", result);
+      const currentsUser = {
+        email: result.user.email,
+        displayName: name,
+        photoURL: image_url,
+        role,
+        coin,
+      };
+      console.log(currentsUser);
+      const { data } = await axiosCommon.put("/user", currentsUser);
+      console.log(data);
       // 3. Save username and photo in firebase
       await updateUserProfile(name, image_url);
       navigate("/");
@@ -57,7 +68,6 @@ const SignUp = () => {
   const handleGoogleSignIn = async () => {
     try {
       await signInWithGoogle();
-
       navigate("/");
       toast.success("Signup Successful");
     } catch (err) {
