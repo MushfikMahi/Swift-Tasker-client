@@ -20,8 +20,43 @@ const MyTask = () => {
     });
   }, [user, control, axiosSecure]);
 
-  const handleUpdate = () => {
-    console.log("update");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedTask, setSelectedTask] = useState(null);
+
+  const handleUpdate = (task) => {
+    setSelectedTask(task);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedTask(null);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const updatedTask = {
+      task_title: form.task_title.value,
+      task_detail: form.task_detail.value,
+      submission_info: form.submission_info.value,
+    };
+    console.log(updatedTask);
+    console.log(selectedTask._id);
+    try {
+      const { data } = await axiosSecure.put(`/update/${selectedTask._id}`, {
+        updatedTask,
+      });
+      console.log(data);
+      if (data.matchedCount > 0) {
+        toast.success("Task Updated Successfully!");
+      }
+
+      setControl(!control);
+    } catch (err) {
+      console.log(err);
+    }
+    closeModal();
   };
   const handleDelete = (task) => {
     if (task?.task_creator.email === user?.email) {
@@ -140,11 +175,65 @@ const MyTask = () => {
                       </td>
                       <td className="px-4 py-4 text-sm whitespace-nowrap">
                         <p
-                          onClick={handleUpdate}
+                          onClick={() => handleUpdate(task)}
                           className="text-xl text-[#0077cc] cursor-pointer hover:text-[#005fa3]"
                         >
                           <GrDocumentUpdate />
                         </p>
+                        {isModalOpen && (
+                          <dialog id="my_modal_2" className="modal" open>
+                            <div className="modal-box">
+                              <h3 className="font-bold text-lg">Update Task</h3>
+                              <form onSubmit={handleSubmit}>
+                                <div>
+                                  <label>Title</label>
+                                  <input
+                                    className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md  focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40  focus:outline-none focus:ring"
+                                    type="text"
+                                    name="task_title"
+                                    defaultValue={selectedTask?.task_title}
+                                    required
+                                  />
+                                </div>
+                                <div>
+                                  <label>Detail</label>
+                                  <input
+                                    className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md  focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40  focus:outline-none focus:ring"
+                                    type="text"
+                                    name="task_detail"
+                                    defaultValue={selectedTask?.task_detail}
+                                    required
+                                  />
+                                </div>
+                                <div>
+                                  <label>Submission Info</label>
+                                  <input
+                                    className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md  focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40  focus:outline-none focus:ring"
+                                    type="text"
+                                    name="submission_info"
+                                    defaultValue={selectedTask?.submission_info}
+                                    required
+                                  />
+                                </div>
+                                <div className="modal-action">
+                                  <button
+                                    type="submit"
+                                    className="btn bg-[#007BA7] text-white"
+                                  >
+                                    Save
+                                  </button>
+                                  <button
+                                    type="button"
+                                    className="btn bg-[#f33a29] text-white"
+                                    onClick={closeModal}
+                                  >
+                                    Close
+                                  </button>
+                                </div>
+                              </form>
+                            </div>
+                          </dialog>
+                        )}
                       </td>
                       <td className="px-4 py-4 text-sm font-medium text-gray-00 whitespace-nowrap">
                         <p
