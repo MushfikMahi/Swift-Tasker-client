@@ -17,7 +17,7 @@ const ManageUser = () => {
   const handleRole = (role, worker) => {
     Swal.fire({
       title: "Are you sure?",
-      text: "You won't be able to revert this!",
+      text: `You want to make him/her ${role}!`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -25,7 +25,9 @@ const ManageUser = () => {
       confirmButtonText: `Yes, Make ${role}`,
     }).then((result) => {
       if (result.isConfirmed) {
-        const { data } = axiosSecure.patch(`//${worker._id}`);
+        const { data } = axiosSecure.patch(`/worker/${worker._id}`, {
+          newRole: role,
+        });
         // .then(async (data) => {
         console.log(data);
         if (data.modifiyedCount > 0) {
