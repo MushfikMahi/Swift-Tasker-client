@@ -10,7 +10,7 @@ const ManageUser = () => {
   const axiosSecure = useAxiosSecure();
   useEffect(() => {
     axiosSecure.get("/worker").then((data) => setWorkers(data.data));
-  }, []);
+  }, [axiosSecure]);
   const handleRemove = () => {
     console.log("remove");
   };
@@ -28,17 +28,14 @@ const ManageUser = () => {
         const { data } = axiosSecure.patch(`/worker/${worker._id}`, {
           newRole: role,
         });
-        // .then(async (data) => {
         console.log(data);
-        if (data.modifiyedCount > 0) {
+        if (data.modifiedCount > 0) {
           Swal.fire(
             "Updated!",
             `This user role has updated to ${role} .`,
             "success"
           );
         }
-        // }
-        // );
       }
     });
   };
@@ -121,7 +118,7 @@ const ManageUser = () => {
         </div>
 
         <div className="flex flex-col mt-6 min-h-[80vh]">
-          <div className="-mx-4 -my-2 overflow-x-auto min-h-screen sm:-mx-6 lg:-mx-8">
+          <div className="-mx-4 -my-2 overflow-x-auto min-h-[50vh] sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
               <div className=" border border-gray-200  md:rounded-lg">
                 <table className="min-w-full divide-y divide-gray-200">
@@ -200,7 +197,7 @@ const ManageUser = () => {
                         </td>
 
                         <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                          {worker?.photo_url}
+                          {worker?.photoUR}
                         </td>
                         <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                           {worker?.role}

@@ -48,7 +48,7 @@ const MyTask = () => {
         updatedTask,
       });
       console.log(data);
-      if (data.matchedCount > 0) {
+      if (data.modifiedCount > 0) {
         toast.success("Task Updated Successfully!");
       }
 
