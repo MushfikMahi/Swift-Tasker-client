@@ -49,6 +49,7 @@ export const router = createBrowserRouter([
       {
         path: "manageTask",
         element: <ManageTask></ManageTask>,
+        loader: () => fetch(`${import.meta.env.VITE_API_URL}/tasks`),
       },
       // task creator
       {

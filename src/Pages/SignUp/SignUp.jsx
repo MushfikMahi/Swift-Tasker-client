@@ -16,7 +16,6 @@ const SignUp = () => {
     signInWithGoogle,
     updateUserProfile,
     loading,
-    handleRole,
     setLoading,
   } = useAuth();
   // const [coin, setCoin] = useState(0);

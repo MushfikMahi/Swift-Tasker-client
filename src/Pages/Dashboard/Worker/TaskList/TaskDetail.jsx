@@ -37,7 +37,7 @@ const TaskDetail = () => {
   return (
     <div className="flex flex-col md:flex-row container mx-auto gap-5 py-20">
       <div className="flex-1">
-        <img src={task?.task_img_url} alt={task?.task_title} />
+        <img src={task?.task_image_url} alt={task?.task_title} />
       </div>
       <div className="flex items-center justify-center">
         <div className="flex-1 space-y-5">
