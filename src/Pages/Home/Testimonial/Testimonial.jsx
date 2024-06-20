@@ -40,7 +40,6 @@ const Testimonial = () => {
                   alt={data.name}
                 />
                 <h3 className="text-3xl font-bold">{data.name}</h3>
-                <h5 className="font-bold">{data.location}</h5>
                 <p>{data.testimonial}</p>
               </div>
             </SwiperSlide>
