@@ -18,6 +18,7 @@ import TaskDetail from "../Pages/Dashboard/Worker/TaskList/TaskDetail";
 import AdminHome from "../Pages/Dashboard/Admin/AdminHome/AdminHome";
 import ManageUser from "../Pages/Dashboard/Admin/ManageUser/ManageUser";
 import ManageTask from "../Pages/Dashboard/Admin/ManageTask/ManageTask";
+import Profile from "../Pages/Profile/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/profile",
+        element: <Profile></Profile>,
       },
     ],
   },
