@@ -7,14 +7,14 @@ const TaskDetail = () => {
   const task = useLoaderData();
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
-  console.log(task);
+  // console.log(task);
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
     const submission_details = form.submission_details.value;
     const { email, displayName } = user;
     const worker_info = { email, displayName };
-    console.log(worker_info);
+    // console.log(worker_info);
     const current_date = new Date().toISOString();
     const { _id, ...restOfTask } = task;
     const submit = {
@@ -25,10 +25,10 @@ const TaskDetail = () => {
       worker_info,
       status: "Pending",
     };
-    console.log(submit);
+    // console.log(submit);
     try {
       const { data } = await axiosSecure.post("/submission", submit);
-      console.log(data);
+      // console.log(data);
       toast.success("Task Submitted Successfully!");
     } catch (error) {
       console.log(error);

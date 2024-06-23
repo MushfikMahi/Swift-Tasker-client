@@ -7,12 +7,40 @@ import Swal from "sweetalert2";
 
 const ManageUser = () => {
   const [workers, setWorkers] = useState([]);
+  const [control, setControl] = useState(false);
   const axiosSecure = useAxiosSecure();
   useEffect(() => {
     axiosSecure.get("/worker").then((data) => setWorkers(data.data));
-  }, [axiosSecure]);
-  const handleRemove = () => {
-    console.log("remove");
+  }, [axiosSecure, control]);
+  const handleRemove = (worker) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // const newAmount = task?.task_quantity * task?.payable_amount;
+        // const newCoin = data.coin + newAmount;
+
+        fetch(`${import.meta.env.VITE_API_URL}/userdelete/${worker._id}`, {
+          method: "DELETE",
+        })
+          .then((res) => res.json())
+          .then(async (data) => {
+            // console.log(data);
+            if (data.deletedCount > 0) {
+              Swal.fire("Deleted!", "The User has been deleted.", "success");
+              // await axiosSecure.patch(`/user/${user?.email}`, { newCoin });
+              // refetch();
+              setControl(!control);
+            }
+          });
+      }
+    });
   };
   const handleRole = (role, worker) => {
     Swal.fire({
@@ -23,18 +51,19 @@ const ManageUser = () => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: `Yes, Make ${role}`,
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        const { data } = axiosSecure.patch(`/worker/${worker._id}`, {
+        const { data } = await axiosSecure.patch(`/worker/${worker._id}`, {
           newRole: role,
         });
-        console.log(data);
+        // console.log(data);
         if (data.modifiedCount > 0) {
           Swal.fire(
             "Updated!",
             `This user role has updated to ${role} .`,
             "success"
           );
+          setControl(!control);
         }
       }
     });
@@ -207,7 +236,7 @@ const ManageUser = () => {
                         </td>
                         <td className="px-4 py-4 text-sm whitespace-nowrap">
                           <p
-                            onClick={handleRemove}
+                            onClick={() => handleRemove(worker)}
                             className="text-xl text-[#e74c3c] cursor-pointer hover:text-[#005fa3]"
                           >
                             <MdOutlineDoNotDisturb />

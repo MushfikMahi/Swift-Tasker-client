@@ -32,13 +32,13 @@ const TaskCreatorHome = () => {
 
   const handleStatus = async (status, id) => {
     const newStatus = status;
-    console.log(newStatus, id);
+    // console.log(newStatus, id);
     try {
       const { data } = await axiosSecure.patch(
         `${import.meta.env.VITE_API_URL}/submissionMark/${id}`,
         { newStatus }
       );
-      console.log(data);
+      // console.log(data);
       toast.success(`Task ${newStatus} Successfully!`);
       // navigate('/')
     } catch (err) {

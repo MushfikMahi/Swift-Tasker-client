@@ -46,7 +46,7 @@ const ManageTask = () => {
         })
           .then((res) => res.json())
           .then(async (data) => {
-            console.log(data);
+            // console.log(data);
             if (data.deletedCount > 0) {
               Swal.fire("Deleted!", "The Craft has been deleted.", "success");
               // await axiosSecure.patch(`/user/${user?.email}`, { newCoin });

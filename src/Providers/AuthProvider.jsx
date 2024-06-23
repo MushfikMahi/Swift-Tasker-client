@@ -47,9 +47,9 @@ const AuthProvider = ({ children }) => {
       role,
       coin,
     };
-    console.log(currentsUser);
+    // console.log(currentsUser);
     const { data } = await axiosCommon.put("/user", currentsUser);
-    console.log(data);
+    // console.log(data);
   };
 
   const resetPassword = (email) => {

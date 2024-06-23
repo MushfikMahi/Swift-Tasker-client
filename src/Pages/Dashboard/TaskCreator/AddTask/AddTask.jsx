@@ -62,10 +62,10 @@ const AddTask = () => {
           created_at: currentTime,
         };
         const newCoin = data.coin - totalAmount;
-        console.log(task);
+        // console.log(task);
         try {
           const { data } = await axiosSecure.post("/task", task);
-          console.log(data);
+          // console.log(data);
           toast.success("Task Created Successfully!");
           await axiosSecure.patch(`/user/${user?.email}`, { newCoin });
           refetch();

@@ -5,7 +5,7 @@ import useRole from "../../../../Hooks/useRole";
 const MySubmission = () => {
   const { user } = useAuth();
   const [data] = useRole();
-  console.log(data);
+  // console.log(data);
   const axiosSecure = useAxiosSecure();
   const [submissions, setSubmissions] = useState([]);
   useEffect(() => {

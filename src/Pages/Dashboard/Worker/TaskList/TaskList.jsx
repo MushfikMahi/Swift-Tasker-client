@@ -2,7 +2,7 @@ import { Link, useLoaderData } from "react-router-dom";
 
 const TaskList = () => {
   const tasks = useLoaderData();
-  console.log(tasks);
+  // console.log(tasks);
   return (
     <div className="py-20 container mx-auto">
       <h2 className="text-center text-3xl font-bold pb-5">All tasks</h2>

@@ -41,13 +41,13 @@ const MyTask = () => {
       task_detail: form.task_detail.value,
       submission_info: form.submission_info.value,
     };
-    console.log(updatedTask);
-    console.log(selectedTask._id);
+    // console.log(updatedTask);
+    // console.log(selectedTask._id);
     try {
       const { data } = await axiosSecure.put(`/update/${selectedTask._id}`, {
         updatedTask,
       });
-      console.log(data);
+      // console.log(data);
       if (data.modifiedCount > 0) {
         toast.success("Task Updated Successfully!");
       }
@@ -78,7 +78,7 @@ const MyTask = () => {
           })
             .then((res) => res.json())
             .then(async (data) => {
-              console.log(data);
+              // console.log(data);
               if (data.deletedCount > 0) {
                 Swal.fire(
                   "Deleted!",

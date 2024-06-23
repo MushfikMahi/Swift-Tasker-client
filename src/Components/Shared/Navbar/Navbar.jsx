@@ -146,9 +146,9 @@ const Navbar = () => {
                   <img
                     id="clickable"
                     className="w-10 h-10 rounded-full border-[#008080] border-4"
-                    title={user.displayName}
+                    title={user?.displayName}
                     alt="user"
-                    src={user.photoURL}
+                    src={user?.photoURL}
                   />
                 </div>
               </div>
@@ -161,7 +161,7 @@ const Navbar = () => {
                     to={"/profile"}
                     className="  hover:bg-[#008080] p-2 rounded-xl"
                   >
-                    {user.displayName}
+                    {user?.displayName}
                   </Link>
                 </li>
                 <li className="text-gray-600 hover:text-white">

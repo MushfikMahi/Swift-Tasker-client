@@ -4,7 +4,13 @@ import useAuth from "../../../Hooks/useAuth";
 
 const DashboardNavbar = () => {
   const [data] = useRole();
-  const { user } = useAuth();
+  const { user, logOut } = useAuth();
+  const handleLogOut = () => {
+    logOut();
+    toast.success("You have sucessfully loged Out", {
+      className: "mt-20",
+    });
+  };
   return (
     <div>
       <div className="navbar bg-base-100">
@@ -23,13 +29,43 @@ const DashboardNavbar = () => {
                 </div>
               </button>{" "}
               ||
-              <div className="w-10 rounded-full">
-                <img
-                  id="clickable"
-                  className="w-10 h-10 rounded-full border-[#008080] border-4"
-                  alt="user"
-                  src={user?.photoURL}
-                />
+              <div className="dropdown dropdown-end">
+                <div
+                  tabIndex={0}
+                  role="button"
+                  className="btn btn-ghost btn-circle avatar"
+                >
+                  <div className="w-10 rounded-full">
+                    <img
+                      id="clickable"
+                      className="w-10 h-10 rounded-full border-[#008080] border-4"
+                      title={user?.displayName}
+                      alt="user"
+                      src={user?.photoURL}
+                    />
+                  </div>
+                </div>
+                <ul
+                  tabIndex={0}
+                  className="space-y-3 menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+                >
+                  <li className="text-gray-600 hover:text-white">
+                    <Link
+                      to={"/profile"}
+                      className="  hover:bg-[#008080] p-2 rounded-xl"
+                    >
+                      {user?.displayName}
+                    </Link>
+                  </li>
+                  <li className="text-gray-600 hover:text-white">
+                    <button
+                      onClick={handleLogOut}
+                      className="btn hover:text-white hover:bg-[#008080] p-2 rounded-xl"
+                    >
+                      Log Out
+                    </button>
+                  </li>
+                </ul>
               </div>
             </div>
             <div className="flex items-center gap-5">

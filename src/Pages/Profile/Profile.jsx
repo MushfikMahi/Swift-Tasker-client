@@ -14,7 +14,7 @@ const Profile = () => {
       className="hero min-h-screen"
       style={{
         backgroundImage:
-          "url(https://img.freepik.com/free-photo/shiny-textured-background_53876-95197.jpg?t=st=1714100017~exp=1714103617~hmac=daef6a87bfbddf95bd5ecde314bbc1f4e2c9d958ec8038c77427fda967e7623f&w=1380)",
+          "url(https://img.freepik.com/free-vector/indian-rupee-coins-falling-background_23-2148010964.jpg?t=st=1719181066~exp=1719184666~hmac=bafc02ff16d3afbc686969f3fdc704cd6120b9ef1009506549992568909a6c77&w=996)",
       }}
     >
       <div className="hero-overlay bg-opacity-60"></div>
@@ -23,7 +23,7 @@ const Profile = () => {
           <div className="flex flex-col md:flex-row items-center justify-center">
             <div className="flex flex-col items-center space-y-5">
               <img
-                className="h-32 rounded-full border-[#ff6b6b] border-4"
+                className="h-32 rounded-full border-[#008080] border-4"
                 src={user.photoURL}
                 alt=""
               />
@@ -68,7 +68,7 @@ const Profile = () => {
                         />
                       </div>
                       <div className="form-control mt-6">
-                        <button className="btn  bg-transparent w-full border-[#ff6b6b] hover:border-transparent text-white hover:bg-[#ff6b6b]">
+                        <button className="btn  bg-transparent w-full border-[#008080] hover:border-transparent text-white hover:bg-[#008080]">
                           Update
                         </button>
                       </div>

@@ -33,16 +33,16 @@ const SignUp = () => {
     } else {
       coin = 50;
     }
-    console.log({ name, email, password, role, image, coin });
+    // console.log({ name, email, password, role, image, coin });
 
     try {
       setLoading(true);
       // 1. Upload image and get image url
       const image_url = await imageUpload(image);
-      console.log(image_url);
+      // console.log(image_url);
       //2. User Registration
       const result = await createUser(email, password);
-      console.log("from signup", result);
+      // console.log("from signup", result);
       const currentsUser = {
         email: result.user.email,
         displayName: name,
@@ -50,9 +50,9 @@ const SignUp = () => {
         role,
         coin,
       };
-      console.log(currentsUser);
+      // console.log(currentsUser);
       const { data } = await axiosCommon.put("/user", currentsUser);
-      console.log(data);
+      // console.log(data);
       // 3. Save username and photo in firebase
       await updateUserProfile(name, image_url);
       navigate("/");
