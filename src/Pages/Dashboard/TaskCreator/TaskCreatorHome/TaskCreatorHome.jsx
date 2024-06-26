@@ -1,23 +1,30 @@
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
+import { FaCoins } from "react-icons/fa";
 import useAuth from "../../../../Hooks/useAuth";
 import useRole from "../../../../Hooks/useRole";
 import { useEffect, useState } from "react";
 import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
-import { MdOutlinePendingActions } from "react-icons/md";
+import { MdOutlinePendingActions, MdPayment } from "react-icons/md";
 import { MdOutlineDoNotDisturb } from "react-icons/md";
 const TaskCreatorHome = () => {
   const { user } = useAuth();
   // console.log(user);
   const [data, refetch] = useRole();
   const [tasks, setTasks] = useState([]);
+  const [states, setStates] = useState([]);
   const axiosSecure = useAxiosSecure();
   const [control, setControl] = useState(false);
   useEffect(() => {
-    axiosSecure(`/submitted/${user?.email}`).then((result) => {
-      setTasks(result.data);
-      // console.log(result.data);
-    });
+    axiosSecure(`/submitted/${user?.email}`).then(
+      (result) => {
+        setTasks(result.data);
+        // console.log(result.data);
+      },
+      axiosSecure(`/taskCreator-state/${user?.email}`).then((result) => {
+        setStates(result.data);
+      })
+    );
   }, [user, control, axiosSecure]);
 
   const [selectedTask, setSelectedTask] = useState(null);
@@ -47,6 +54,41 @@ const TaskCreatorHome = () => {
   };
   return (
     <div>
+      <section className="p-6 my-6 dark:bg-gray-100 dark:text-gray-800">
+        <div className="container grid grid-cols-1 gap-6 mx-auto sm:grid-cols-2 xl:grid-cols-4">
+          <div className="flex p-4 space-x-4 rounded-lg md:space-x-6 dark:bg-gray-50 dark:text-gray-800">
+            <div className="flex justify-center p-2 align-middle rounded-lg sm:p-4 dark:bg-violet-600">
+              <FaCoins className="text-3xl text-white" />
+            </div>
+            <div className="flex flex-col justify-center align-middle">
+              <p className="text-3xl font-semibold leading-none">
+                {states?.coin?.coin}
+              </p>
+              <p className="capitalize">Coin</p>
+            </div>
+          </div>
+          <div className="flex p-4 space-x-4 rounded-lg md:space-x-6 dark:bg-gray-50 dark:text-gray-800">
+            <div className="flex justify-center p-2 align-middle rounded-lg sm:p-4 dark:bg-violet-600">
+              <MdOutlinePendingActions className="text-3xl text-white" />
+            </div>
+            <div className="flex flex-col justify-center align-middle">
+              <p className="text-3xl font-semibold leading-none">
+                {states?.quantity[0]?.totalQuantity}
+              </p>
+              <p className="capitalize">Pending Task</p>
+            </div>
+          </div>
+          <div className="flex p-4 space-x-4 rounded-lg md:space-x-6 dark:bg-gray-50 dark:text-gray-800">
+            <div className="flex justify-center p-2 align-middle rounded-lg sm:p-4 dark:bg-violet-600">
+              <MdPayment className="text-3xl text-white" />
+            </div>
+            <div className="flex flex-col justify-center align-middle">
+              <p className="text-3xl font-semibold leading-none">172%</p>
+              <p className="capitalize">Payment</p>
+            </div>
+          </div>
+        </div>
+      </section>
       <section className="container px-4 mx-auto pt-24">
         <div className="flex items-center gap-x-3">
           <h2 className="text-lg font-medium text-gray-800 ">
