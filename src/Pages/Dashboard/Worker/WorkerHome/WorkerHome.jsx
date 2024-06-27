@@ -4,15 +4,26 @@ import { IoWalletOutline } from "react-icons/io5";
 import useAuth from "../../../../Hooks/useAuth";
 import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 import { useEffect, useState } from "react";
+import Approved from "./Approved";
 const WorkerHome = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [state, setStates] = useState();
   useEffect(() => {
-    axiosSecure(`/worker-state/${user?.email}`).then((result) => {
-      setStates(result.data);
-    });
-  }, []);
+    const fetchData = async () => {
+      try {
+        const result = await axiosSecure(`/worker-state/${user?.email}`);
+        setStates(result.data);
+      } catch (error) {
+        console.error("Error fetching worker states:", error);
+        // You can also set an error state or show a notification here
+      }
+    };
+
+    if (user?.email) {
+      fetchData();
+    }
+  }, [user]);
 
   return (
     <div>
@@ -51,6 +62,7 @@ const WorkerHome = () => {
           </div>
         </div>
       </section>
+      <Approved></Approved>
     </div>
   );
 };
