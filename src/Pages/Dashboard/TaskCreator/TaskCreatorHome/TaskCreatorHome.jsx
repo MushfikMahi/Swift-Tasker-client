@@ -74,7 +74,9 @@ const TaskCreatorHome = () => {
             </div>
             <div className="flex flex-col justify-center align-middle">
               <p className="text-3xl font-semibold leading-none">
-                {states?.quantity[0]?.totalQuantity}
+                {(states?.quantity?.length > 0 &&
+                  states?.quantity[0]?.totalQuantity) ||
+                  0}
               </p>
               <p className="capitalize">Pending Task</p>
             </div>

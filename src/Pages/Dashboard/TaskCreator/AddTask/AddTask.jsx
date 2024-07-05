@@ -5,10 +5,11 @@ import DatePicker from "react-datepicker";
 import useRole from "../../../../Hooks/useRole";
 import "react-datepicker/dist/react-datepicker.css";
 import { useState } from "react";
-import { axiosSecure } from "../../../../Hooks/useAxiosSecure";
+import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 import { useNavigate } from "react-router-dom";
 const AddTask = () => {
   const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
   const [data, refetch] = useRole();
   const navigate = useNavigate();
   const [startDate, setStartDate] = useState(new Date());
