@@ -1,29 +1,53 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const WithdrawRequest = () => {
-  const [requests, setRequests] = useState([]);
+  const [withdraws, setwithdraws] = useState([]);
+  const axiosSecure = useAxiosSecure();
+  const [control, setControl] = useState(false);
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/pending`)
-      .then((res) => res.json())
-      .then((data) => {
-        setRequests(data);
-      });
-  }, []);
-  const navigate = useNavigate();
-  const handleMarking = (id) => {
-    navigate(`/marking/${id}`);
+    async function withdrawData() {
+      const { data } = await axiosSecure("/withdrawrequest");
+      setwithdraws(data);
+    }
+    withdrawData();
+  }, [control]);
+  const handlePayment = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Complete the payment!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`${import.meta.env.VITE_API_URL}/delete-withdraw/${id}`, {
+          method: "DELETE",
+        })
+          .then((res) => res.json())
+          .then(async (data) => {
+            // console.log(data);
+            if (data.deletedCount > 0) {
+              Swal.fire("Succeded!", "The payment succeded.", "success");
+              setControl(!control);
+            }
+          });
+      }
+    });
   };
 
   return (
     <section className="container px-4 mx-auto pt-24 min-h-[80vh]">
       <div className="flex items-center gap-x-3">
         <h2 className="text-lg font-medium text-gray-800 ">
-          Withdrawal Requests
+          Withdrawal withdraws
         </h2>
 
         <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full ">
-          {requests?.length} Requests
+          {withdraws?.length} withdraws
         </span>
       </div>
 
@@ -53,7 +77,7 @@ const WithdrawRequest = () => {
                       scope="col"
                       className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500"
                     >
-                      <span>Amoint</span>
+                      <span>Amount</span>
                     </th>
                     <th
                       scope="col"
@@ -75,33 +99,42 @@ const WithdrawRequest = () => {
                     </th>
 
                     <th className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
-                      Actions
+                      Payment
                     </th>
                   </tr>
                 </thead>
-                {requests.map((requests) => (
+                {withdraws.map((withdraw) => (
                   <tbody
-                    key={requests._id}
+                    key={withdraw._id}
                     className="bg-white divide-y divide-gray-200 "
                   >
                     <tr>
                       <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                        {requests?.title}
+                        {withdraw?.worker_name}
                       </td>
 
                       <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                        {requests?.takerName}
+                        {withdraw?.coin_to_withdrow}
+                      </td>
+                      <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                        {withdraw?.withdraw_amount}
                       </td>
 
                       <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                        {requests?.marks}
+                        {withdraw?.account_number}
                       </td>
-                      <td className="px-4 py-4 text-sm whitespace-nowrap">
+                      <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                        {withdraw?.payment_method}
+                      </td>
+                      <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                        {new Date(withdraw?.withdraw_time).toLocaleDateString()}
+                      </td>
+                      <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                         <button
-                          onClick={() => handleMarking(requests?._id)}
-                          className="bg-[#007BA7] text-white px-3 py-2 rounded-lg transition-colors duration-200   hover:bg-blue-700 focus:outline-none disabled:cursor-not-allowed"
+                          onClick={() => handlePayment(withdraw._id)}
+                          className="btn bg-[#008080] text-white"
                         >
-                          Give Mark
+                          Success
                         </button>
                       </td>
                     </tr>
